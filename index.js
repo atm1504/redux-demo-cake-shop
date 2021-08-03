@@ -1,4 +1,8 @@
-console.log("From index.js")
+// console.log("From index.js")
+
+const redux = require('redux')
+const createStore = redux.createStore
+
 const BUY_CAKE = "BUY_CAKE"
 
 function buyCake() {
@@ -21,3 +25,13 @@ const reducer = (state = initialState, action) => {
         default: return state
     }
 }
+
+const store = createStore(reducer)
+console.log("Initial store: " + store.getState())
+
+const unsubscribe = store.subscribe(() => console.log("Updated state", store.getState()))
+
+store.dispatch(buyCake())
+store.dispatch(buyCake())
+store.dispatch(buyCake())
+unsubscribe()
