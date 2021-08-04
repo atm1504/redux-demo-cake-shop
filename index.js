@@ -1,14 +1,14 @@
-const redux = require('redux')
-const createStore = redux.createStore
+const redux = require("redux");
+const createStore = redux.createStore;
 
-const BUY_CAKE = "BUY_CAKE"
+const BUY_CAKE = "BUY_CAKE";
 const BUY_ICE_CREAM = "BUY_ICE_CREAM";
 
 function buyCake() {
-    return {
-        type: BUY_CAKE,
-        info:'First redux action'
-}
+  return {
+    type: BUY_CAKE,
+    info: "First redux action",
+  };
 }
 
 function buyIceCream() {
@@ -18,36 +18,70 @@ function buyIceCream() {
   };
 }
 
-const initialState = {
-    numOfCakes:10,
-    numOfIceCreams:20
-}
+// const initialState = {
+//     numOfCakes:10,
+//     numOfIceCreams:20
+// }
 
-const reducer = (state = initialState, action) => {
-    switch (action.type) {
-      case BUY_CAKE:
-        return {
-          ...state,
-          numOfCakes: state.numOfCakes - 1,
-        };
-      case BUY_ICE_CREAM:
-        return {
-          ...state,
-          numOfIceCreams: state.numOfIceCreams - 1,
-        };
-      default:
-        return state;
-    }
-}
+const initialCakeState = {
+  numOfCakes: 10,
+};
 
-const store = createStore(reducer)
-console.log("Initial store: " + store.getState())
+const initialIceCreamState = {
+  numOfIceCreams: 20,
+};
 
-const unsubscribe = store.subscribe(() => console.log("Updated state", store.getState()))
+// const reducer = (state = initialState, action) => {
+//     switch (action.type) {
+//       case BUY_CAKE:
+//         return {
+//           ...state,
+//           numOfCakes: state.numOfCakes - 1,
+//         };
+//       case BUY_ICE_CREAM:
+//         return {
+//           ...state,
+//           numOfIceCreams: state.numOfIceCreams - 1,
+//         };
+//       default:
+//         return state;
+//     }
+// }
 
-store.dispatch(buyCake())
-store.dispatch(buyCake())
-store.dispatch(buyCake())
-store.dispatch(buyIceCream())
-store.dispatch(buyIceCream())
-unsubscribe()
+const cakeReducer = (state = initialCakeState, action) => {
+  switch (action.type) {
+    case BUY_CAKE:
+      return {
+        ...state,
+        numOfCakes: state.numOfCakes - 1,
+      };
+    default:
+      return state;
+  }
+};
+
+const iceCreamReducer = (state = initialCakeState, action) => {
+  switch (action.type) {
+    case BUY_ICE_CREAM:
+      return {
+        ...state,
+        numOfIceCreams: state.numOfIceCreams - 1,
+      };
+    default:
+      return state;
+  }
+};
+
+const store = createStore(reducer);
+console.log("Initial store: " + store.getState());
+
+const unsubscribe = store.subscribe(() =>
+  console.log("Updated state", store.getState())
+);
+
+store.dispatch(buyCake());
+store.dispatch(buyCake());
+store.dispatch(buyCake());
+store.dispatch(buyIceCream());
+store.dispatch(buyIceCream());
+unsubscribe();
